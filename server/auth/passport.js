@@ -12,6 +12,7 @@ module.exports = function (passport) {
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        //proxy:true used so hosting site returns https, if needed
         callbackURL: "/auth/redirect/google", proxy:true
       },
       async function (accessToken, refreshToken, profile, done) {
@@ -40,7 +41,8 @@ module.exports = function (passport) {
       {
         clientID: process.env.FACEBOOK_CLIENT_ID,
         clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-        callbackURL: "/auth/redirect/facebook",
+        //proxy:true used so hosting site returns https, if needed
+        callbackURL: "/auth/redirect/facebook", proxy:true,
         profileFields: [
           "id",
           "displayName",
@@ -51,14 +53,24 @@ module.exports = function (passport) {
       },
       async function (accessToken, refreshToken, profile, done) {
         profile = profile._json;
+        
+        //todo FIX: add dummy email address if none in facebook profile
+        const emailEval = () => {
+          if(profile.email) {
+            return profile.email
+          } else  return "fixme@facebook.com"
+        }
+
+        const email = emailEval();
+
         try {
           const user = await User.findOrCreate({
-            where: { email: profile.email },
+            where: { email: email },
             defaults: {
               passportId: profile.id,
               firstName: profile.first_name,
               lastName: profile.last_name,
-              email: profile.email,
+              email: email,
               role: "CUSTOMER",
             },
           });
