@@ -12,7 +12,7 @@ module.exports = function (passport) {
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "/auth/redirect/google",
+        callbackURL: "/auth/redirect/google", proxy:true
       },
       async function (accessToken, refreshToken, profile, done) {
         profile = profile._json;
