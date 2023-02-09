@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://gs-poshleaf.herokuapp.com/"><img src="https://gs-poshleaf.herokuapp.com/img/logo.svg" alt="Poshleaf" width="400"></a>
+  <a href="https://poshleaf.onrender.com"><img src="https://poshleaf.onrender.com//img/logo.svg" alt="Poshleaf" width="400"></a>
   <br>
   PoshLeaf
   <br>
